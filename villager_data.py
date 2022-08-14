@@ -13,10 +13,17 @@ def all_species(filename):
 
     species = set()
 
-    # TODO: replace this with your code
+    villagers_data = open(filename)
+    for line in villagers_data:
+        line = line.rstrip()
+        tokens = line.split("|")
+
+        species.add(tokens[1])
 
     return species
 
+# To test then function
+# print(all_species('villagers.csv'))
 
 def get_villagers_by_species(filename, search_string="All"):
     """Return a list of villagers' names by species.
@@ -94,7 +101,7 @@ def find_likeminded_villagers(filename, villager_name):
     Arguments:
         - filename (str): the path to a data file
         - villager_name (str): a villager's name
-    
+
     Return:
         - set[str]: a set of names
 

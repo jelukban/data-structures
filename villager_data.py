@@ -2,6 +2,7 @@
 
 
 from re import search
+from time import perf_counter
 
 
 def all_species(filename):
@@ -133,7 +134,7 @@ def all_data(filename):
 
     return all_data
 
-print(all_data("villagers.csv"))
+# print(all_data("villagers.csv"))
 
 def find_motto(filename, villager_name):
     """Return the villager's motto.
@@ -149,8 +150,17 @@ def find_motto(filename, villager_name):
         - str: the villager's motto or None
     """
 
-    # TODO: replace this with your code
+    villagers_data = open(filename)
 
+    for line in villagers_data:
+        name, _, _, _, motto = line.rstrip().split("|")
+
+        if name == villager_name:
+            return motto
+
+    villagers_data.close()
+
+# print(find_motto("villagers.csv", "Whitney"))
 
 def find_likeminded_villagers(filename, villager_name):
     """Return a set of villagers with the same personality as the given villager.
@@ -167,4 +177,22 @@ def find_likeminded_villagers(filename, villager_name):
         {'Bella', ..., 'Carmen'}
     """
 
-    # TODO: replace this with your code
+    similar_personalities = set()
+    given_villager_personality = None
+
+    for villager_data in all_data(filename):
+        name, _, personality = villager_data[:3]
+
+        if name == villager_name:
+            given_villager_personality = personality
+            break
+
+    for villager_data in all_data(filename):
+        name, _, personality = villager_data[:3]
+
+        if personality == given_villager_personality:
+            similar_personalities.add(name)
+
+    return similar_personalities
+
+# print(find_likeminded_villagers("villagers.csv", "Leonardo"))

@@ -1,6 +1,9 @@
 """Functions to parse a file containing villager data."""
 
 
+from re import search
+
+
 def all_species(filename):
     """Return a set of unique species in the given file.
 
@@ -38,10 +41,24 @@ def get_villagers_by_species(filename, search_string="All"):
 
     villagers = []
 
-    # TODO: replace this with your code
+    villager_data = open(filename)
+
+    for line in villager_data:
+        line = line.rstrip()
+        tokens = line.split("|")
+        villager_name, villager_specie, *_ = tokens
+
+        # print(villager_name, villager_specie)
+
+        if search_string == "All":
+            villagers.append(villager_name)
+        elif villager_specie == search_string:
+            villagers.append(villager_name)
 
     return sorted(villagers)
 
+# To test then function
+# print(get_villagers_by_species('villagers.csv', 'Wolf'))
 
 def all_names_by_hobby(filename):
     """Return a list of lists containing villagers' names, grouped by hobby.

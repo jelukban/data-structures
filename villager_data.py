@@ -23,6 +23,8 @@ def all_species(filename):
 
         species.add(tokens[1])
 
+    villagers_data.close()
+
     return species
 
 # To test then function
@@ -55,6 +57,8 @@ def get_villagers_by_species(filename, search_string="All"):
         elif villager_specie == search_string:
             villagers.append(villager_name)
 
+    villager_data.close()
+
     return sorted(villagers)
 
 # To test then function
@@ -70,10 +74,37 @@ def all_names_by_hobby(filename):
         - list[list[str]]: a list of lists containing names
     """
 
-    # TODO: replace this with your code
+    villagers_data = open(filename)
+    fitness_names = []
+    nature_names = []
+    education_names = []
+    music_names = []
+    fashion_names = []
+    play_names = []
 
-    return []
+    for line in villagers_data:
+        line = line.rstrip()
+        tokens = line.split("|")
+        villager_name, _, _, villager_hobby, *_ = tokens
 
+        if villager_hobby == "Fitness":
+            fitness_names.append(villager_name)
+        elif villager_hobby == "Nature":
+            nature_names.append(villager_name)
+        elif villager_hobby == "Education":
+            education_names.append(villager_name)
+        elif villager_hobby == "Music":
+            music_names.append(villager_name)
+        elif villager_hobby == "Fashion":
+            fashion_names.append(villager_name)
+        elif villager_hobby == "Play":
+            play_names.append(villager_name)
+
+    villagers_data.close()
+
+    return [fitness_names, nature_names, education_names, music_names, fashion_names, play_names]
+
+# print(all_names_by_hobby('villagers.csv'))
 
 def all_data(filename):
     """Return all the data in a file.
@@ -90,10 +121,19 @@ def all_data(filename):
 
     all_data = []
 
-    # TODO: replace this with your code
+    villagers_data = open(filename)
+
+    for line in villagers_data:
+        name, specie, personality, hobby, motto = line.rstrip().split("|")
+
+        temp_tuple = (name, specie, personality, hobby, motto)
+        all_data.append(temp_tuple)
+
+    villagers_data.close()
 
     return all_data
 
+print(all_data("villagers.csv"))
 
 def find_motto(filename, villager_name):
     """Return the villager's motto.
